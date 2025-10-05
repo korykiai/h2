@@ -1,0 +1,28 @@
+[versions]
+
+h2database = "2.3.232"
+jackson = "2.19.2"
+junit = "5.9.2"
+
+koryki-databases = "0.1.0"
+koryki-core = "0.1.0"
+
+[plugins]
+
+[libraries]
+
+h2database = { module = "com.h2database:h2", version.ref = "h2database" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" } # version comes from BOM
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" } # version comes from BOM
+
+koryki-databases = { module = "ai.koryki.databases:koryki-databases", version.ref = "koryki-databases" }
+koryki-core-antlr = { module = "ai.koryki.core:koryki-antlr", version.ref = "koryki-core" }
+koryki-core-iql = { module = "ai.koryki.core:koryki-iql", version.ref = "koryki-core" }
+koryki-core-kql = { module = "ai.koryki.core:koryki-kql", version.ref = "koryki-core" }
+koryki-core-model = { module = "ai.koryki.core:koryki-model", version.ref = "koryki-core" }
+
+[bundles]
+
+koryki-core = ["koryki-core-antlr", "koryki-core-iql", "koryki-core-kql", "koryki-core-model"]

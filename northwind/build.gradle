@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+description = 'koryki h2 databases and services'
+
+dependencies {
+
+    implementation libs.h2database
+    implementation libs.jackson.databind
+
+    implementation(libs.bundles.koryki.core)
+    implementation(libs.koryki.databases)
+
+    testImplementation platform(libs.junit.bom)
+    testImplementation libs.junit.jupiter
+    testRuntimeOnly libs.junit.platform.launcher
+}
+
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        // Define the publication for this subproject
+        mavenJava(MavenPublication) {
+            // The 'java' component includes the main JAR artifact and its transitive dependencies
+            from components.java
+
+            // Optionally, override the artifact ID (defaults to project name: 'api')
+            artifactId = 'koryki-h2-northwind'
+        }
+    }
+}

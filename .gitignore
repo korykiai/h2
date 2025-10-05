@@ -1,0 +1,55 @@
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+/.idea/
+
+/.idea_bak/
+/antlr/src/main/antlr/gen/IQLLexer.interp
+/antlr/src/main/gen/IQLLexer.interp
+/antlr/src/main/antlr/gen/IQLLexer.java
+/antlr/src/main/gen/IQLLexer.java
+/antlr/src/main/antlr/gen/IQLLexer.tokens
+/antlr/src/main/gen/IQLLexer.tokens
+/antlr/src/main/antlr/gen/KQLLexer.interp
+/antlr/src/main/gen/KQLLexer.interp
+/antlr/src/main/antlr/gen/KQLLexer.java
+/antlr/src/main/gen/KQLLexer.java
+/antlr/src/main/antlr/gen/KQLLexer.tokens
+/antlr/src/main/antlr/KQLLexer.tokens
+/antlr/src/main/gen/KQLLexer.tokens
