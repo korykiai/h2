@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'ai.koryki.h2'
-rootProject.version = '0.1.0'
+rootProject.version = '0.2.0'
 
 configurations {
     invoker

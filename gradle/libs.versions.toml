@@ -4,8 +4,8 @@ h2database = "2.3.232"
 jackson = "2.19.2"
 junit = "5.9.2"
 
-koryki-databases = "0.1.0"
-koryki-core = "0.1.0"
+koryki-databases = "0.2.0"
+koryki-core = "0.2.0"
 
 [plugins]
 
