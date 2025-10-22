@@ -127,12 +127,12 @@ public class NorthwindDatabaseTest {
     private List<List<String>> test(InputStream in, String name) throws IOException, SQLException {
 
 
-        String lql = new String(in.readAllBytes(), StandardCharsets.UTF_8);
+        String kql = new String(in.readAllBytes(), StandardCharsets.UTF_8);
 
         System.out.println("+++ kql ++++++++++++++++++");
-        System.out.println(lql);
+        System.out.println(kql);
 
-        Query query = toScript(lql);
+        Query query = toScript(kql);
 
         String sql = toSql(query);
         System.out.println("+++ sql ++++++++++++++++++");
