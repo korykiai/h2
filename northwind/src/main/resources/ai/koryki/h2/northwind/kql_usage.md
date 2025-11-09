@@ -16,19 +16,19 @@ retrieval.
 
 We have to know what data is in the database. This is shown in following diagram.
 
-![Northwind Entitymodel ER-Diagram](./northwind_model.png)
+![Northwind Entitymodel ER-Diagram](northwind_model.png)
 
 ## A sample query
 
 Let's have a closer look on the example from README.md
 
     FIND customers c, c-orders o
-    WHERE count(o) > 10 AND
+    FILTER count(o) > 10 AND
         o.order_date BETWEEN DATE '2023-01-01' AND DATE '2023-01-31'
-    RETURN c.company_name, count(o)
+    FETCH c.company_name, count(o)
     ORDER count(o) DESC
 
-In this query we use four of the major keywords: **FIND**, **WHERE**, **RETURN**, **ORDER**.
+In this query we use four of the major keywords: **FIND**, **FILTER**, **FETCH**, **ORDER**.
 
 ### FIND-Clause
 
@@ -60,9 +60,9 @@ If we want to write optional backward directed link, write:
 
 We can use more than one character as alias and whitespaces and linebreaks don't matter.
 
-### WHERE-Clause
+### FILTER-Clause
 
-Keyword **WHERE** is followed by one logical expression. A logical expression can be a composition of
+Keyword **FILTER** is followed by one logical expression. A logical expression can be a composition of
 logial expressions using **AND**, **OR** and **NOT**.
 
     a AND b OR NOT c
@@ -80,32 +80,32 @@ a, b and c are unary logical expressions like:
 
 Each unary logical expression resolve to true or false.
 
-### RETURN-Clause
+### FETCH-Clause
 
-Keyword **RETURN** is followed by a colon separated list of expressions the query should give as result-columns.
+Keyword **FETCH** is followed by a colon separated list of expressions the query should give as result-columns.
 
-Each return-expression can have an optional header.
+Each FETCH-expression can have an optional header.
 
 ### ORDER-Clause
 
-Keyword **RETURN** is followed by a colon separated list of expressions to sort the result.
+Keyword **ORDER** is followed by a colon separated list of expressions to sort the result.
 
 ## Nested Queries
 
-We can uses nested queries in expression. Lets search for products priced higher than the average price of product category.
+We can use nested queries in expression. Let's search for products priced higher than the average price of product category.
 
     FIND products p, p-categories c, p-suppliers s
-    WHERE p.unit_price > (
+    FILTER p.unit_price > (
         FIND products p2, p2-categories c2
-        WHERE c2.category_name = c.category_name
-        RETURN avg(p2.unit_price)
+        FILTER c2.category_name = c.category_name
+        FETCH avg(p2.unit_price)
     )
     AND p.units_in_stock < p.reorder_level AND s.country IN ('USA', 'UK', 'Germany')
-    RETURN s.company_name, c.category_name, p.product_name, p.unit_price, p.units_in_stock, p.reorder_level
+    FETCH s.company_name, c.category_name, p.product_name, p.unit_price, p.units_in_stock, p.reorder_level
     ORDER p.unit_price DESC
 
-The first expression in WHERE-Clause selects the avarage price of product category.
-Have a look at nested WHERE-Clause. We can compare category_names from inside and outside nested query.
+The first expression in FILTER-Clause selects the average price of product category.
+Have a look at nested FILTER-Clause. We can compare category_names from inside and outside nested query.
 Entities defined in the enclosing query are visible in the nested query.
 
 ## Set-Operation
@@ -114,20 +114,20 @@ We can connect resultsets of queries using SET-Operators. This is best explained
 example:
 
     FIND products p, p-suppliers s
-    WHERE p.units_in_stock < 20 AND NOT p.discontinued = 1
-    RETURN p.product_name, s.company_name supplier
+    FILTER p.units_in_stock < 20 AND NOT p.discontinued = 1
+    FETCH p.product_name, s.company_name supplier
     
     INTERSECT
     
     FIND products p, p-order_details od, p-suppliers s, od-orders o
-    WHERE o.order_date >= DATE '2023-01-01' AND sum(od.quantity) > 1000
-    RETURN p.product_name, s.company_name supplier
+    FILTER o.order_date >= DATE '2023-01-01' AND sum(od.quantity) > 1000
+    FETCH p.product_name, s.company_name supplier
     
     MINUS
     
     FIND products p, p-suppliers s
-    WHERE p.units_on_order > 0
-    RETURN p.product_name, s.company_name supplier
+    FILTER p.units_on_order > 0
+    FETCH p.product_name, s.company_name supplier
 
 At first, we search products low in stock, at second we search for products with high demand.
 Products low in stock and high on demand pass `INTERSECT` operation.
@@ -144,12 +144,12 @@ Next language feature of **kql** are query-blocks. We can define query-blocks an
 
     WITH sales AS (
         FIND orders o, o-order_details d
-        RETURN sum(d.unit_price * d.quantity) sum
+        FILTER sum(d.unit_price * d.quantity) sum
         ORDER sum DESC
         LIMIT 1
     )
     FIND employees e, e-sales s
-    RETURN e.last_name, e.first_name, e.home_phone
+    FETCH e.last_name, e.first_name, e.home_phone
 
 We use a query-block just by using its name in FROM-Clause. They are like custom-made entities.
 The link `e-salges s` in second FIND-Clause refers to the first entity `orders o` inside query block `sales`.
